@@ -1,4 +1,4 @@
-```js
+js
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 
 const BLACKLIST_CHANNEL_ID = 'CHANNEL_ID_HERE';
