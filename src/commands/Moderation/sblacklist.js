@@ -1,4 +1,4 @@
-```js
+js
 import { SlashCommandBuilder } from 'discord.js';
 
 export default {
