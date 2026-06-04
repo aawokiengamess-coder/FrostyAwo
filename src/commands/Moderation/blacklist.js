@@ -1,7 +1,7 @@
 js
 import { SlashCommandBuilder, PermissionFlagsBits } from 'discord.js';
 
-const BLACKLIST_CHANNEL_ID = 'CHANNEL_ID_HERE';
+const BLACKLIST_CHANNEL_ID = '1511799852340609225';
 
 export default {
     data: new SlashCommandBuilder()
