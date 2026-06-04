@@ -38,6 +38,7 @@ const CATEGORY_ICONS = {
     Community: "👥",
     Birthday: "🎂",
     Config: "⚙️",
+    Sessions: "📋",
 };
 
 
@@ -128,6 +129,11 @@ export async function createInitialHelpMenu(client) {
         {
             name: "⚙️ **Config**",
             value: "Server and bot configuration management commands",
+            inline: true
+        },
+         {
+            name: "📋 **Sessions**",
+            value: "ERLC Catagory",
             inline: true
         },
         {
