@@ -1,4 +1,4 @@
-﻿import {
+import {
     SlashCommandBuilder,
     ActionRowBuilder,
     ButtonBuilder,
@@ -40,7 +40,6 @@ const CATEGORY_ICONS = {
     Config: "⚙️",
     Sessions: "📋",
 };
-
 
 
 
@@ -168,7 +167,10 @@ export async function createInitialHelpMenu(client) {
     });
     embed.setTimestamp();
 
-   
+    const bugReportButton = new ButtonBuilder()
+        .setCustomId(BUG_REPORT_BUTTON_ID)
+        .setLabel("Report Bug")
+        .setStyle(ButtonStyle.Danger);
 
     const selectRow = createSelectMenu(
         CATEGORY_SELECT_ID,
@@ -176,12 +178,13 @@ export async function createInitialHelpMenu(client) {
         options,
     );
 
-   
+    const buttonRow = new ActionRowBuilder().addComponents([
+        bugReportButton,
     ]);
 
     return {
         embeds: [embed],
-        components: [buttonRow,selectRow],
+        components: [buttonRow, selectRow],
     };
 }
 
@@ -220,5 +223,3 @@ export default {
         }, HELP_MENU_TIMEOUT_MS);
     },
 };
-
-
