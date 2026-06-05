@@ -9,34 +9,25 @@ export default {
 
     async execute(interaction) {
         const githubButton = new ButtonBuilder()
-            .setLabel('?? Report Bug on GitHub')
+            .setLabel('📎 Report Bug on GitHub')
             .setStyle(ButtonStyle.Link)
             .setURL('https://github.com/aawokiengamess-coder/FrostyAwo-Bugs/issues');
 
-        const row = new ActionRowBuilder().addComponents(githubButton);
-
-
-
-
-    async execute(interaction) {
-        const SupportDefult = new ButtonBuilder()
+        const supportButton = new ButtonBuilder()
             .setLabel('Report To Staff')
             .setStyle(ButtonStyle.Primary)
-            
+            .setCustomId('report_to_staff');
 
-        const row = new ActionRowBuilder().addComponents(githubButton);
-
-
-        
+        const row = new ActionRowBuilder().addComponents(githubButton, supportButton);
 
         const bugReportEmbed = createEmbed({
-            title: '?? Bug Report',
+            title: '📎 Bug Report',
             description: 'Found a bug? Please report it on our GitHub Issues page!\n\n' +
             '**When reporting a bug, please include:**\n' +
-            '• ?? Detailed description of the issue\n' +
-            '• ?? Steps to reproduce the problem\n' +
-            '• ?? Screenshots if applicable\n' +
-            '• ?? Your bot version and environment\n\n' +
+            '• 📝 Detailed description of the issue\n' +
+            '• 🔄 Steps to reproduce the problem\n' +
+            '• 📸 Screenshots if applicable\n' +
+            '• 📦 Your bot version and environment\n\n' +
             'This helps us fix issues faster and more effectively!',
             color: 'error'
         })
@@ -48,7 +39,3 @@ export default {
         });
     },
 };
-
-
-
-
