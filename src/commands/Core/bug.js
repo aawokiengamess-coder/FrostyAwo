@@ -15,6 +15,20 @@ export default {
 
         const row = new ActionRowBuilder().addComponents(githubButton);
 
+
+
+
+    async execute(interaction) {
+        const SupportDefult = new ButtonBuilder()
+            .setLabel('Report To Staff')
+            .setStyle(ButtonStyle.Primary)
+            
+
+        const row = new ActionRowBuilder().addComponents(githubButton);
+
+
+        
+
         const bugReportEmbed = createEmbed({
             title: '?? Bug Report',
             description: 'Found a bug? Please report it on our GitHub Issues page!\n\n' +
