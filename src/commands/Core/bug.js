@@ -1,11 +1,18 @@
-import { SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageFlags } from 'discord.js';
-import { createEmbed } from '../../utils/embeds.js';
+js
+import {
+    SlashCommandBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle
+} from 'discord.js';
 
+import { createEmbed } from '../../utils/embeds.js';
 import { InteractionHelper } from '../../utils/interactionHelper.js';
+
 export default {
     data: new SlashCommandBuilder()
-        .setName("bug")
-        .setDescription("Report a bug or issue with the bot"),
+        .setName('bug')
+        .setDescription('Report a bug or issue with the bot'),
 
     async execute(interaction) {
         const githubButton = new ButtonBuilder()
@@ -14,28 +21,30 @@ export default {
             .setURL('https://github.com/aawokiengamess-coder/FrostyAwo-Bugs/issues');
 
         const supportButton = new ButtonBuilder()
-            .setLabel('Report To Staff')
+            .setLabel('📨 Report To Staff')
             .setStyle(ButtonStyle.Primary)
             .setCustomId('report_to_staff');
 
-        const row = new ActionRowBuilder().addComponents(githubButton, supportButton);
+        const row = new ActionRowBuilder().addComponents(
+            githubButton,
+            supportButton
+        );
 
-        const bugReportEmbed = createEmbed({
-            title: '📎 Bug Report',
-            description: 'Found a bug? Please report it on our GitHub Issues page!\n\n' +
-            '**When reporting a bug, please include:**\n' +
-            '• 📝 Detailed description of the issue\n' +
-            '• 🔄 Steps to reproduce the problem\n' +
-            '• 📸 Screenshots if applicable\n' +
-            '• 📦 Your bot version and environment\n\n' +
-            'This helps us fix issues faster and more effectively!',
+        const embed = createEmbed({
+            title: '🐛 Bug Reports',
+            description:
+                'Found a bug?\n\n' +
+                '• Use GitHub for public bug reports\n' +
+                '• Use "Report To Staff" for private reports\n\n' +
+                'Please include as much detail as possible.',
             color: 'error'
-        })
-            .setTimestamp();
+        });
 
         await InteractionHelper.safeReply(interaction, {
-            embeds: [bugReportEmbed],
-            components: [row],
+            embeds: [embed],
+            components: [row]
         });
-    },
+    }
 };
+
+
