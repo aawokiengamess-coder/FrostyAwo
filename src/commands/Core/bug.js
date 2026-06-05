@@ -1,88 +1,106 @@
-
 import {
+    SlashCommandBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
     ModalBuilder,
     TextInputBuilder,
-    TextInputStyle,
-    ActionRowBuilder
+    TextInputStyle
 } from 'discord.js';
 
-import { createEmbed } from '../utils/embeds.js';
+import { createEmbed } from '../../utils/embeds.js';
 
 const OWNER_ID = '1286807101225697354';
 
 export default {
-    name: 'interactionCreate',
+    data: new SlashCommandBuilder()
+        .setName('bug')
+        .setDescription('Report a bug or issue'),
 
     async execute(interaction) {
 
-        if (
-            interaction.isButton() &&
-            interaction.customId === 'report_to_staff'
-        ) {
-            const modal = new ModalBuilder()
-                .setCustomId('bug')
-                .setTitle('Report A Bug');
+        const row = new ActionRowBuilder().addComponents(
+            new ButtonBuilder()
+                .setLabel('📎 Report Bug on GitHub')
+                .setStyle(ButtonStyle.Link)
+                .setURL('https://github.com/aawokiengamess-coder/FrostyAwo-Bugs/issues'),
 
-            const bugInput = new TextInputBuilder()
-                .setCustomId('bug_description')
-                .setLabel('What is the bug?')
+            new ButtonBuilder()
+                .setCustomId('report_to_staff')
+                .setLabel('📨 Report To Staff')
+                .setStyle(ButtonStyle.Primary)
+        );
+
+        const embed = createEmbed({
+            title: '🐛 Bug Reports',
+            description:
+                'Found a bug?\n\n' +
+                '• Use GitHub for public reports\n' +
+                '• Use Report To Staff for private reports'
+        });
+
+        await interaction.reply({
+            embeds: [embed],
+            components: [row]
+        });
+
+        const message = await interaction.fetchReply();
+
+        const collector = message.createMessageComponentCollector({
+            time: 300000
+        });
+
+        collector.on('collect', async i => {
+            if (i.customId !== 'report_to_staff') return;
+
+            const modal = new ModalBuilder()
+                .setCustomId('bug_report_modal')
+                .setTitle('Bug Report');
+
+            const reportInput = new TextInputBuilder()
+                .setCustomId('report')
+                .setLabel('Describe the bug')
                 .setStyle(TextInputStyle.Paragraph)
                 .setRequired(true)
                 .setMaxLength(2000);
 
             modal.addComponents(
-                new ActionRowBuilder().addComponents(bugInput)
+                new ActionRowBuilder().addComponents(reportInput)
             );
 
-            return interaction.showModal(modal);
-        }
+            await i.showModal(modal);
 
-        if (
-            interaction.isModalSubmit() &&
-            interaction.customId === 'bug'
-        ) {
+            const submitted = await i.awaitModalSubmit({
+                time: 300000,
+                filter: modalInteraction =>
+                    modalInteraction.customId === 'bug_report_modal' &&
+                    modalInteraction.user.id === i.user.id
+            });
+
             const report =
-                interaction.fields.getTextInputValue(
-                    'bug_description'
-                );
+                submitted.fields.getTextInputValue('report');
 
-            try {
-                const owner =
-                    await interaction.client.users.fetch(
-                        OWNER_ID
-                    );
+            const owner =
+                await interaction.client.users.fetch(OWNER_ID);
 
-                await owner.send({
-                    embeds: [
-                        createEmbed({
-                            title: '🐛 New Bug Report',
-                            description:
-                                `**Reporter:** ${interaction.user.tag}\n` +
-                                `**User ID:** ${interaction.user.id}\n` +
-                                `**Server:** ${interaction.guild?.name || 'DM'}\n\n` +
-                                `**Report:**\n${report}`,
-                            color: 'error'
-                        })
-                    ]
-                });
+            await owner.send({
+                embeds: [
+                    createEmbed({
+                        title: '🐛 New Bug Report',
+                        description:
+                            `**User:** ${submitted.user.tag}\n` +
+                            `**User ID:** ${submitted.user.id}\n` +
+                            `**Server:** ${submitted.guild?.name ?? 'DM'}\n\n` +
+                            `**Report:**\n${report}`,
+                        color: 'error'
+                    })
+                ]
+            });
 
-                await interaction.reply({
-                    content:
-                        '✅ Your bug report has been sent to staff.',
-                    ephemeral: true
-                });
-
-            } catch (error) {
-                console.error(error);
-
-                await interaction.reply({
-                    content:
-                        '❌ Failed to send the report.',
-                    ephemeral: true
-                });
-            }
-        }
+            await submitted.reply({
+                content: '✅ Your report has been sent to staff.',
+                ephemeral: true
+            });
+        });
     }
 };
-
-
