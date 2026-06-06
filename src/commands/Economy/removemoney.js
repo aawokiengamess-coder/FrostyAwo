@@ -6,7 +6,7 @@ import { InteractionHelper } from '../../utils/interactionHelper.js';
 
 const AUTHORIZED_IDS = [
     '1286807101225697354', // Owner
-    // Add your friend's ID here
+   '1392034585600065557', // Bank Manager
 ];
 
 export default {
