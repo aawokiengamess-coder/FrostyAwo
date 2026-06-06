@@ -4,7 +4,10 @@ import { getEconomyData, setEconomyData } from '../../utils/economy.js';
 import { withErrorHandling } from '../../utils/errorHandler.js';
 import { InteractionHelper } from '../../utils/interactionHelper.js';
 
-const OWNER_ID = '1286807101225697354';
+const AUTHORIZED_IDS = [
+    '1286807101225697354', // Owner
+    // Add your friend's ID here
+];
 
 export default {
     data: new SlashCommandBuilder()
@@ -47,9 +50,9 @@ export default {
         const deferred = await InteractionHelper.safeDefer(interaction);
         if (!deferred) return;
 
-        if (interaction.user.id !== OWNER_ID) {
+        if (!AUTHORIZED_IDS.includes(interaction.user.id)) {
             return InteractionHelper.safeEditReply(interaction, {
-                content: '❌ Owner only command.'
+                content: '❌ You do not have permission to use this command.'
             });
         }
 
