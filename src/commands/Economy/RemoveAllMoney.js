@@ -7,7 +7,7 @@ export default {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
     async execute(interaction) {
-        const OWNER_ID = "YOUR_USER_ID";
+        const OWNER_ID = "1286807101225697354";
 
         if (interaction.user.id !== OWNER_ID) {
             return interaction.reply({
