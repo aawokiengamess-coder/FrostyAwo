@@ -7,6 +7,7 @@ import { InteractionHelper } from '../../utils/interactionHelper.js';
 const AUTHORIZED_IDS = [
     '1286807101225697354', // Owner
    '1392034585600065557', // Bank Manager
+    '1265436727858692109', // Ruby
 ];
 
 export default {
