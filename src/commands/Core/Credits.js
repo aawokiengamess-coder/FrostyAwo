@@ -22,16 +22,12 @@ export default {
 👑 **Owner & Developer**
 SnowyAwo
 
-👨‍💻 **CoOwner**
-Ducky 
 
 🎨 **Design**
 SnowyAwo
 
 🧪 **Server Staff**
 SnowyAwo
-Ducky
-Oreo
 1dgkids2012
 Pekky
 
